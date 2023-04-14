@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import com.atguigu.springcloud.service.PaymentService;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author 黄林强
@@ -78,5 +79,17 @@ public class PaymentController {
     @GetMapping(value = "/payment/lb")
     public String getPaymentLB() {
         return serverPort; //返回服务接口
+    }
+
+    @GetMapping(value = "/payment/feign/timeout")
+    public String paymentFeignTimeout()
+    {
+        // 业务逻辑处理正确，但是需要耗费3秒钟
+        try {
+            TimeUnit.SECONDS.sleep(3);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return serverPort;
     }
 }
